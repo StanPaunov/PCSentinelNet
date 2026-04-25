@@ -4,11 +4,8 @@ PC Sentinel is a Windows desktop monitoring app for local PC health, network tra
 
 ## Run
 
-Double-click `Start-PCSentinel.cmd`, or run:
-
-```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\PCSentinel.ps1
-```
+Double-click `Start-PCSentinel.cmd`
+ 
 
 For the most complete process and network ownership details, start it from an elevated PowerShell window.
 
