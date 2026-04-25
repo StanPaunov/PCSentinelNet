@@ -1,16 +1,12 @@
-# PC Sentinel
+# PC Sentinel NET
 
 PC Sentinel is a Windows desktop monitoring app for local PC health, network traffic, TCP connections, and basic security posture.
 
 ## Run
 
-Double-click `Start-PCSentinel.cmd`, or run:
+Double-click `Start-PCSentinel.cmd`
 
-```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\PCSentinel.ps1
-```
-
-For the most complete process and network ownership details, start it from an elevated PowerShell window.
+ 
 
 Use the `Refresh every` selector in the app header to scan every 5 seconds, 30 seconds, 1 minute, or never. The default is 1 minute.
 The app starts in dark mode by default. Use the `Light Mode` button to switch themes.
