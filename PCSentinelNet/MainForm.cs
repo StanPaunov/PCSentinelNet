@@ -56,6 +56,10 @@ public sealed class MainForm : Form
     private Color text;
     private Color muted;
     private Color accent;
+    private Color accentText;
+    private Color accentSoft;
+    private Color warning;
+    private Color border;
     private Color buttonAlt;
 
     public MainForm()
@@ -65,6 +69,7 @@ public sealed class MainForm : Form
         MinimumSize = new Size(1180, 660);
         StartPosition = FormStartPosition.CenterScreen;
         Font = new Font("Segoe UI", 9F);
+        DoubleBuffered = true;
 
         BuildHeader();
         BuildCards();
@@ -597,26 +602,34 @@ public sealed class MainForm : Form
         darkMode = dark;
         if (dark)
         {
-            window = Color.FromArgb(15, 23, 42);
-            header = Color.FromArgb(2, 6, 23);
-            surface = Color.FromArgb(30, 41, 59);
-            surfaceAlt = Color.FromArgb(51, 65, 85);
-            text = Color.FromArgb(241, 245, 249);
-            muted = Color.FromArgb(203, 213, 225);
-            accent = Color.FromArgb(14, 165, 233);
-            buttonAlt = Color.FromArgb(71, 85, 105);
+            window = Color.FromArgb(16, 20, 18);
+            header = Color.FromArgb(13, 17, 16);
+            surface = Color.FromArgb(23, 32, 28);
+            surfaceAlt = Color.FromArgb(32, 43, 38);
+            text = Color.FromArgb(243, 246, 241);
+            muted = Color.FromArgb(185, 197, 189);
+            accent = Color.FromArgb(110, 231, 166);
+            accentText = Color.FromArgb(7, 32, 19);
+            accentSoft = Color.FromArgb(32, 51, 41);
+            warning = Color.FromArgb(246, 199, 106);
+            border = Color.FromArgb(49, 65, 57);
+            buttonAlt = Color.FromArgb(32, 43, 38);
             themeButton.Text = "Light Mode";
         }
         else
         {
-            window = Color.FromArgb(243, 244, 246);
-            header = Color.FromArgb(17, 24, 39);
+            window = Color.FromArgb(243, 246, 241);
+            header = Color.FromArgb(23, 32, 28);
             surface = Color.White;
-            surfaceAlt = Color.FromArgb(249, 250, 251);
-            text = Color.FromArgb(17, 24, 39);
-            muted = Color.FromArgb(75, 85, 99);
-            accent = Color.FromArgb(37, 99, 235);
-            buttonAlt = Color.FromArgb(55, 65, 81);
+            surfaceAlt = Color.FromArgb(235, 241, 237);
+            text = Color.FromArgb(23, 32, 28);
+            muted = Color.FromArgb(56, 69, 63);
+            accent = Color.FromArgb(22, 118, 75);
+            accentText = Color.White;
+            accentSoft = Color.FromArgb(220, 239, 229);
+            warning = Color.FromArgb(178, 114, 19);
+            border = Color.FromArgb(196, 211, 202);
+            buttonAlt = Color.FromArgb(56, 69, 63);
             themeButton.Text = "Dark Mode";
         }
 
@@ -644,21 +657,39 @@ public sealed class MainForm : Form
             control.BackColor = surface;
         else if (control is Button button)
         {
-            button.BackColor = button == refreshButton || button.Text.Contains("Security") || button.Text.Contains("Disk Management") ? accent : buttonAlt;
-            button.ForeColor = Color.White;
+            var primary = button == refreshButton || button.Text.Contains("Security") || button.Text.Contains("Disk Management");
+            button.BackColor = primary ? accent : buttonAlt;
+            button.ForeColor = primary ? accentText : text;
             button.FlatStyle = FlatStyle.Flat;
-            button.FlatAppearance.BorderSize = 0;
+            button.FlatAppearance.BorderSize = primary ? 0 : 1;
+            button.FlatAppearance.BorderColor = border;
+            button.Cursor = Cursors.Hand;
         }
 
         if (control is Label label)
         {
-            label.ForeColor = label.Font.Bold ? muted : muted;
-            if (label.Text.StartsWith("PC Sentinel")) label.ForeColor = Color.White;
-            if (label == lastScan) label.ForeColor = Color.FromArgb(229, 231, 235);
+            label.ForeColor = label.Font.Bold ? text : muted;
+            if (label.Text.StartsWith("PC Sentinel")) label.ForeColor = darkMode ? Color.White : Color.FromArgb(243, 246, 241);
+            if (label.Text.StartsWith("Danger:")) label.ForeColor = warning;
+            if (label == lastScan) label.ForeColor = darkMode ? muted : Color.FromArgb(226, 238, 231);
+            if (label == cpuValue || label == memoryValue || label == diskValue || label == networkValue) label.ForeColor = accent;
         }
         else if (control is TextBox or ListBox or ComboBox or Form)
         {
             control.ForeColor = text;
+        }
+
+        if (control is ComboBox combo)
+        {
+            combo.FlatStyle = FlatStyle.Flat;
+        }
+        else if (control is ListBox list)
+        {
+            list.BorderStyle = BorderStyle.FixedSingle;
+        }
+        else if (control is TextBox box)
+        {
+            box.BorderStyle = BorderStyle.FixedSingle;
         }
 
         foreach (Control child in control.Controls)
@@ -667,26 +698,39 @@ public sealed class MainForm : Form
 
     private void ApplyGridTheme(DataGridView grid)
     {
-        grid.BackgroundColor = window;
-        grid.GridColor = darkMode ? Color.FromArgb(71, 85, 105) : Color.FromArgb(209, 213, 219);
+        grid.BackgroundColor = surface;
+        grid.BorderStyle = BorderStyle.FixedSingle;
+        grid.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+        grid.GridColor = border;
         grid.EnableHeadersVisualStyles = false;
+        grid.RowTemplate.Height = 28;
         grid.DefaultCellStyle.BackColor = surface;
         grid.DefaultCellStyle.ForeColor = text;
-        grid.DefaultCellStyle.SelectionBackColor = accent;
-        grid.DefaultCellStyle.SelectionForeColor = Color.White;
+        grid.DefaultCellStyle.SelectionBackColor = accentSoft;
+        grid.DefaultCellStyle.SelectionForeColor = text;
+        grid.DefaultCellStyle.Padding = new Padding(4, 2, 4, 2);
         grid.AlternatingRowsDefaultCellStyle.BackColor = surfaceAlt;
         grid.AlternatingRowsDefaultCellStyle.ForeColor = text;
         grid.ColumnHeadersDefaultCellStyle.BackColor = surfaceAlt;
         grid.ColumnHeadersDefaultCellStyle.ForeColor = text;
+        grid.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+        grid.ColumnHeadersDefaultCellStyle.Padding = new Padding(4, 4, 4, 4);
+        grid.ColumnHeadersHeight = 34;
     }
 
     private void DrawTab(object? sender, DrawItemEventArgs e)
     {
         var page = tabs.TabPages[e.Index];
         var selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
-        using var brush = new SolidBrush(selected ? surface : window);
+        using var brush = new SolidBrush(selected ? surfaceAlt : window);
         e.Graphics.FillRectangle(brush, e.Bounds);
-        TextRenderer.DrawText(e.Graphics, page.Text, tabs.Font, e.Bounds, selected ? text : muted, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+        var color = selected ? accent : muted;
+        TextRenderer.DrawText(e.Graphics, page.Text, tabs.Font, e.Bounds, color, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+        if (selected)
+        {
+            using var pen = new Pen(accent, 3);
+            e.Graphics.DrawLine(pen, e.Bounds.Left + 10, e.Bounds.Bottom - 2, e.Bounds.Right - 10, e.Bounds.Bottom - 2);
+        }
     }
 
     private static DataGridView NewGrid() => new()
@@ -697,7 +741,8 @@ public sealed class MainForm : Form
         RowHeadersVisible = false,
         SelectionMode = DataGridViewSelectionMode.FullRowSelect,
         ShowCellToolTips = true,
-        AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+        AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+        AllowUserToResizeRows = false
     };
 
     private static TextBox NewTextBox() => new()
