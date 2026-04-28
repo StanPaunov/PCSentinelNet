@@ -875,14 +875,16 @@ public sealed class MainForm : Form
         };
         psi.Arguments = "-NoProfile -ExecutionPolicy Bypass -EncodedCommand " + Convert.ToBase64String(Encoding.Unicode.GetBytes(script));
         using var process = Process.Start(psi) ?? throw new InvalidOperationException("Could not start PowerShell.");
+        var outputTask = process.StandardOutput.ReadToEndAsync();
+        var errorTask = process.StandardError.ReadToEndAsync();
         if (!process.WaitForExit(30000))
         {
             try { process.Kill(entireProcessTree: true); } catch { }
             throw new TimeoutException("PowerShell probe timed out.");
         }
 
-        var output = process.StandardOutput.ReadToEnd();
-        var error = process.StandardError.ReadToEnd();
+        var output = outputTask.GetAwaiter().GetResult();
+        var error = errorTask.GetAwaiter().GetResult();
         if (process.ExitCode != 0 && string.IsNullOrWhiteSpace(output))
             throw new InvalidOperationException(error.Trim());
         return output.Trim();
