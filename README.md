@@ -8,7 +8,7 @@ Double-click `Start-PCSentinel.cmd`
 
  
 
-Use the `Refresh every` selector in the app header to scan every 5 seconds, 30 seconds, 1 minute, or never. The default is 1 minute.
+Use the `Refresh every` drop down menu  in the app header to scan every 5 seconds, 30 seconds, 1 minute, or never. The default is 1 minute.
 The app starts in dark mode by default. Use the `Light Mode` button to switch themes.
 
 ## What it monitors
