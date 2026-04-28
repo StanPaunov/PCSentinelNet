@@ -24,26 +24,6 @@ Start-PCSentinelNet.cmd
 
 For the most complete process and network ownership details, run it from an elevated terminal.
 
-## Build
-
-```powershell
-dotnet build .\PCSentinelNet\PCSentinelNet.csproj
-```
-
-## Publish A Downloadable App
-
-```powershell
-dotnet publish .\PCSentinelNet\PCSentinelNet.csproj -c Release -r win-x64 --self-contained false
-```
-
-The published files will be created under:
-
-```text
-PCSentinelNet\bin\Release\net8.0-windows\win-x64\publish
-```
-
-Zip the contents of that `publish` folder and upload the zip to GitHub Releases.
-
 ## Features
 
 - Dark mode by default, with a Light Mode button
