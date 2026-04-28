@@ -1,34 +1,65 @@
-# PC Sentinel NET
+# PC Sentinel .NET
 
-PC Sentinel is a Windows desktop monitoring app for local PC health, network traffic, TCP connections, and basic security posture.
+PC Sentinel .NET is a Windows Forms desktop app for monitoring local PC health, network activity, listening TCP ports, disk information, and basic Windows security status.
 
-## Run
+## Requirements
 
-Double-click `Start-PCSentinel.cmd`
+- Windows 10 or Windows 11
+- .NET 8 SDK to build or run from source
+- Windows PowerShell, included with Windows
 
- 
+## Run From Source
 
-Use the `Refresh every` drop down menu  in the app header to scan every 5 seconds, 30 seconds, 1 minute, or never. The default is 1 minute.
-The app starts in dark mode by default. Use the `Light Mode` button to switch themes.
+From the repository root:
 
-## What it monitors
+```powershell
+dotnet run --project .\PCSentinelNet\PCSentinelNet.csproj
+```
 
-- CPU, memory, system disk usage, and aggregate network throughput
-- Top processes by CPU time
-- Hover over a top process for the internet search hint, then double-click or right-click to search it online
-- Active network interfaces with upload/download rates
-- Listening TCP ports in the Network & Firewall tab
-- Hover over a listening TCP port for the internet search hint, then double-click or right-click to search it online
-- Basic firewall profile information in the Security tab
-- TCP connections and listening ports
-- Hover over a TCP connection for the internet search hint, then double-click or right-click to search it online
-- Windows Firewall profile status
-- Microsoft Defender real-time protection and signature timestamp when available
-- Button to open Windows Security settings from the Security tab
-- Disk and volume inventory with links to Windows Disk Management and Storage Settings
-- Basic hardware, OS, BIOS, hotfix, and installed software information where Windows allows access
-- Alerts for high resource usage, disabled firewall profiles, sensitive listening ports, and outbound connection attempts
+Or double-click:
 
-## Notes
+```text
+Start-PCSentinelNet.cmd
+```
+
+For the most complete process and network ownership details, run it from an elevated terminal.
+
+## Build
+
+```powershell
+dotnet build .\PCSentinelNet\PCSentinelNet.csproj
+```
+
+## Publish A Downloadable App
+
+```powershell
+dotnet publish .\PCSentinelNet\PCSentinelNet.csproj -c Release -r win-x64 --self-contained false
+```
+
+The published files will be created under:
+
+```text
+PCSentinelNet\bin\Release\net8.0-windows\win-x64\publish
+```
+
+Zip the contents of that `publish` folder and upload the zip to GitHub Releases.
+
+## Features
+
+- Dark mode by default, with a Light Mode button
+- Refresh interval selector: 5 seconds, 30 seconds, 1 minute, or Never
+- CPU, memory, system disk, and network throughput summary cards
+- Top processes table with internet search by hover, double-click, or right-click
+- Network & Firewall tab with active interfaces, listening TCP ports, and TCP connections
+- Listening TCP ports show owning process, PID, risk level, reason, and a danger summary
+- TCP connection search by process, remote address, remote port, and connection state
+- Security tab with Defender/firewall checks and an Open Security Settings button
+- Firewall profile details in the Security tab
+- Disk & Info tab with volume, physical disk, hardware, OS, and installed software information
+- Buttons for Disk Management and Storage Settings
+
+## Security Notes
 
 This is a local visibility tool. It does not block traffic, replace antivirus, capture packet payloads, or send data outside your machine.
+
+Listening TCP risk levels are guidance, not proof of compromise. Review any unexpected high or medium risk listener, especially services bound to all network interfaces.
