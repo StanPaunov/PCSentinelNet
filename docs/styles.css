@@ -209,6 +209,18 @@ dd {
   box-shadow: 0 24px 70px var(--shadow);
 }
 
+.image-preview {
+  background: #0d1110;
+}
+
+.image-preview img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 640 / 414;
+  object-fit: cover;
+}
+
 .window-bar {
   display: flex;
   align-items: center;
