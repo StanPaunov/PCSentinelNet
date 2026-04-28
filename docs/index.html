@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="PC Sentinel .NET monitors Windows PC health, network activity, listening TCP ports, firewall status, disk info, and security posture.">
+  <title>PC Sentinel .NET</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="PC Sentinel .NET home">
+      <span class="brand-mark">PS</span>
+      <span>PC Sentinel .NET</span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="#download">Download</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#security">Security</a>
+      <a href="https://github.com/StanPaunov/PCSentinelNet">GitHub</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Windows monitoring and network visibility</p>
+        <h1 id="hero-title">PC Sentinel .NET</h1>
+        <p class="hero-text">
+          A Windows desktop app for checking PC health, network and firewall status,
+          listening TCP ports, disk details, and basic security signals from one place.
+        </p>
+        <div class="hero-actions" id="download">
+          <a class="button primary" href="https://github.com/StanPaunov/PCSentinelNet/releases">Download latest release</a>
+          <a class="button secondary" href="https://github.com/StanPaunov/PCSentinelNet">View source</a>
+        </div>
+        <dl class="release-facts" aria-label="Release facts">
+          <div>
+            <dt>Platform</dt>
+            <dd>Windows</dd>
+          </div>
+          <div>
+            <dt>Runtime</dt>
+            <dd>.NET 8</dd>
+          </div>
+          <div>
+            <dt>Current zip</dt>
+            <dd>v1.0.1</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="app-preview" aria-label="PC Sentinel app preview">
+        <div class="window-bar">
+          <span></span>
+          <span></span>
+          <span></span>
+          <strong>PC Sentinel .NET</strong>
+        </div>
+        <div class="preview-grid">
+          <article class="metric good">
+            <span>CPU</span>
+            <strong>18%</strong>
+          </article>
+          <article class="metric warn">
+            <span>Listening ports</span>
+            <strong>12</strong>
+          </article>
+          <article class="metric info">
+            <span>Firewall</span>
+            <strong>On</strong>
+          </article>
+        </div>
+        <div class="preview-panel">
+          <div class="panel-title">
+            <span>What Opened TCP Listening Port</span>
+            <span class="risk-badge">Review</span>
+          </div>
+          <div class="port-row">
+            <span>127.0.0.1:5000</span>
+            <strong>Local service</strong>
+          </div>
+          <div class="port-row">
+            <span>0.0.0.0:3389</span>
+            <strong>High attention</strong>
+          </div>
+          <div class="port-row">
+            <span>0.0.0.0:445</span>
+            <strong>Windows sharing</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-band" id="capabilities" aria-labelledby="capabilities-title">
+      <div class="section-heading">
+        <p class="eyebrow">Core views</p>
+        <h2 id="capabilities-title">Monitor the signals that matter</h2>
+      </div>
+      <div class="feature-grid">
+        <article>
+          <h3>PC and system health</h3>
+          <p>Review basic hardware, software, CPU, memory, disk, and operating system information.</p>
+        </article>
+        <article>
+          <h3>Network and firewall</h3>
+          <p>Inspect TCP connections, listening TCP ports, adapter data, and network-facing activity.</p>
+        </article>
+        <article>
+          <h3>Security shortcuts</h3>
+          <p>Open Windows Security settings quickly and review firewall profile information in the app.</p>
+        </article>
+        <article>
+          <h3>Refresh control</h3>
+          <p>Choose 5 seconds, 30 seconds, 1 minute, or Never for refresh timing. The default is 1 minute.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="install-section" aria-labelledby="install-title">
+      <div>
+        <p class="eyebrow">Install</p>
+        <h2 id="install-title">Run the desktop app</h2>
+      </div>
+      <ol class="steps">
+        <li>Download the latest zip from GitHub Releases.</li>
+        <li>Extract the zip to a normal folder such as Downloads or Documents.</li>
+        <li>Run <code>PCSentinelNet.exe</code>.</li>
+      </ol>
+    </section>
+
+    <section class="security-section" id="security" aria-labelledby="security-title">
+      <div class="section-heading">
+        <p class="eyebrow">Security model</p>
+        <h2 id="security-title">Local visibility first</h2>
+      </div>
+      <div class="security-list">
+        <p>The app reads Windows system and network information locally. It is not a packet sniffer and does not upload monitoring data.</p>
+        <p>Listening TCP ports are summarized so you can judge exposure: localhost-only ports are usually lower risk, while public listening ports deserve closer review.</p>
+        <p>Unsigned Windows apps can show SmartScreen warnings. Code signing can reduce warnings once a certificate is available.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>&copy; <span id="year"></span> PC Sentinel .NET</span>
+    <a href="https://github.com/StanPaunov/PCSentinelNet/issues">Report an issue</a>
+  </footer>
+
+  <script src="site.js"></script>
+</body>
+</html>
