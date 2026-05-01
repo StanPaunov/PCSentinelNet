@@ -5,8 +5,7 @@ PC Sentinel .NET is a Windows Forms desktop app for monitoring local PC health, 
 ## Requirements
 
 - Windows 10 or Windows 11
-- .NET 8 SDK to build or run from source
-- Windows PowerShell, included with Windows
+- .NET 8 
 
 ## Run From Source
 
