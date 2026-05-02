@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="PC Sentinel NET and Sentinel Mobile monitor local Windows and Android device health, network status, storage, and security posture.">
+  <meta name="description" content="PC Sentinel NET monitors Windows PC health, network, firewall, storage, and security posture, with links to the separate Sentinel Mobile Android app.">
   <title>PC Sentinel NET</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -18,6 +18,7 @@
       <a href="#mobile">Mobile</a>
       <a href="#capabilities">Capabilities</a>
       <a href="#security">Security</a>
+      <a href="https://stanpaunov.github.io/SentinelMobile/">Sentinel Mobile</a>
       <a href="https://github.com/StanPaunov/PCSentinelNet">GitHub</a>
     </nav>
   </header>
@@ -25,29 +26,29 @@
   <main id="top">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow">Windows desktop and Android monitoring</p>
+        <p class="eyebrow">Windows desktop monitoring</p>
         <h1 id="hero-title">PC Sentinel NET</h1>
         <p class="hero-text">
-          A local monitoring suite for checking PC health, network and firewall status,
-          Android device signals, storage details, and basic security posture from one place.
+          A local Windows monitoring app for checking PC health, network and firewall status,
+          storage details, processes, and basic security posture.
         </p>
         <div class="hero-actions" id="download">
           <a class="button primary" href="https://github.com/StanPaunov/PCSentinelNet/releases">Download desktop release</a>
-          <a class="button secondary" href="https://github.com/StanPaunov/PCSentinelNet/tree/main/Sentinel%20Mobile">Open mobile project</a>
+          <a class="button secondary" href="https://stanpaunov.github.io/SentinelMobile/">Open Sentinel Mobile</a>
           <a class="button secondary" href="https://github.com/StanPaunov/PCSentinelNet">View source</a>
         </div>
         <dl class="release-facts" aria-label="Release facts">
           <div>
             <dt>Platform</dt>
-            <dd>Windows x64 + Android</dd>
+            <dd>Windows x64</dd>
           </div>
           <div>
             <dt>Runtime</dt>
-            <dd>.NET 8 + Android 8+</dd>
+            <dd>.NET 8</dd>
           </div>
           <div>
             <dt>Current packages</dt>
-            <dd>Desktop v1.0.2 / Mobile debug</dd>
+            <dd>Desktop v1.0.2</dd>
           </div>
         </dl>
       </div>
@@ -90,8 +91,8 @@
 
     <section class="mobile-section" id="mobile" aria-labelledby="mobile-title">
       <div class="section-heading">
-        <p class="eyebrow">Android companion</p>
-        <h2 id="mobile-title">Sentinel Mobile keeps the same dark monitoring flow</h2>
+        <p class="eyebrow">Separate Android app</p>
+        <h2 id="mobile-title">Sentinel Mobile now has its own repository and website</h2>
       </div>
       <div class="mobile-grid">
         <article>
@@ -112,9 +113,9 @@
         </article>
       </div>
       <div class="cross-links" aria-label="Project links">
-        <a class="button primary" href="https://github.com/StanPaunov/PCSentinelNet/tree/main/Sentinel%20Mobile">View Sentinel Mobile source</a>
-        <a class="button secondary" href="https://github.com/StanPaunov/PCSentinelNet/releases">Desktop releases</a>
-        <a class="button secondary" href="#download">Back to downloads</a>
+        <a class="button primary" href="https://stanpaunov.github.io/SentinelMobile/">Open Sentinel Mobile website</a>
+        <a class="button secondary" href="https://github.com/StanPaunov/SentinelMobile">Mobile source</a>
+        <a class="button secondary" href="https://github.com/StanPaunov/SentinelMobile/releases">Mobile APK releases</a>
       </div>
     </section>
 
@@ -130,7 +131,7 @@
         </article>
         <article>
           <h3>Android companion</h3>
-          <p>Use Sentinel Mobile for GPS, battery, storage, network, security, and device settings visibility where Android allows it.</p>
+          <p>Use the separate Sentinel Mobile app for GPS, battery, storage, network, security, and device settings visibility where Android allows it.</p>
         </article>
         <article>
           <h3>Network and firewall</h3>
@@ -198,7 +199,7 @@
         <li>Download the latest zip from GitHub Releases.</li>
         <li>Extract the zip to a normal folder such as Downloads or Documents.</li>
         <li>Run <code>PCSentinelNet.exe</code>.</li>
-        <li>For Android, open the <a href="https://github.com/StanPaunov/PCSentinelNet/tree/main/Sentinel%20Mobile">Sentinel Mobile project</a> or use the APK package from the project upload.</li>
+        <li>For Android, open the separate <a href="https://stanpaunov.github.io/SentinelMobile/">Sentinel Mobile website</a> or <a href="https://github.com/StanPaunov/SentinelMobile/releases">mobile releases</a>.</li>
       </ol>
     </section>
 
@@ -208,9 +209,9 @@
         <h2 id="security-title">Local visibility first</h2>
       </div>
       <div class="security-list">
-        <p>The apps read Windows or Android system information locally. They are not packet sniffers and do not upload monitoring data.</p>
+        <p>PC Sentinel NET reads Windows system information locally. It is not a packet sniffer and does not upload monitoring data.</p>
         <p>Listening TCP ports are summarized so you can judge exposure: localhost-only ports are usually lower risk, while public listening ports deserve closer review.</p>
-        <p>Sentinel Mobile does not request internet access or package-install permission. Unsigned Windows apps can show SmartScreen warnings until code signed.</p>
+        <p>Sentinel Mobile is maintained separately for Android. Unsigned Windows apps can show SmartScreen warnings until code signed.</p>
       </div>
     </section>
   </main>
