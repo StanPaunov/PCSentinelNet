@@ -1,10 +1,14 @@
 # PC Sentinel NET
 
-PC Sentinel NET is a Windows desktop monitoring app with a matching Android companion project, Sentinel Mobile.
+PC Sentinel NET is a Windows desktop monitoring app. The Android app, Sentinel Mobile, is maintained separately.
 
 Website: https://stanpaunov.github.io/PCSentinelNet/
 
 GitHub Releases: https://github.com/StanPaunov/PCSentinelNet/releases
+
+Sentinel Mobile website: https://stanpaunov.github.io/SentinelMobile/
+
+Sentinel Mobile repository: https://github.com/StanPaunov/SentinelMobile
 
 ## Desktop App
 
@@ -32,7 +36,9 @@ The Windows desktop app monitors local PC health, network activity, listening TC
 
 Sentinel Mobile is the Android version with the same dark monitoring style. Android limits what normal apps can inspect, so the mobile app reports device, battery, GPS, storage, network, and security checks that Android allows.
 
-Android project folder: `Sentinel Mobile`
+The Android app has moved to its own repository:
+
+https://github.com/StanPaunov/SentinelMobile
 
 ### Mobile Features
 
