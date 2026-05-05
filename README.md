@@ -1,14 +1,18 @@
 # PC Sentinel NET
 
-PC Sentinel NET is a Windows desktop monitoring app. The Android app, Sentinel Mobile, is maintained separately.
+PC Sentinel NET is a Windows desktop monitoring app with an Android companion project included in this repository.
+
+The product direction is:
+
+- **PC Sentinel NET**: Windows desktop app that monitors the Windows PC.
+- **PC Sentinel Mobile**: Android companion app for viewing Windows PC information from a phone.
+- **Sentinel Phone**: separate future Android app for monitoring Android phones themselves.
 
 Website: https://stanpaunov.github.io/PCSentinelNet/
 
 GitHub Releases: https://github.com/StanPaunov/PCSentinelNet/releases
 
-Sentinel Mobile website: https://stanpaunov.github.io/SentinelMobile/
-
-Sentinel Mobile repository: https://github.com/StanPaunov/SentinelMobile
+Android project: `Sentinel Mobile`
 
 ## Desktop App
 
@@ -32,29 +36,37 @@ The Windows desktop app monitors local PC health, network activity, listening TC
 - Disk & Info tab with volume, physical disk, hardware, OS, and installed software information
 - Buttons for Disk Management and Windows Storage Settings
 
-## Sentinel Mobile
+## PC Sentinel Mobile
 
-Sentinel Mobile is the Android version with the same dark monitoring style. Android limits what normal apps can inspect, so the mobile app reports device, battery, GPS, storage, network, and security checks that Android allows.
+PC Sentinel Mobile is the Android companion app inside this repository. It is for checking Windows PC information from Android, not for monitoring Android phones. It can monitor one Windows PC in the free version by connecting to a LAN PC agent endpoint, and it includes a visible Pro path for future multi-client monitoring.
 
-The Android app has moved to its own repository:
+Expected PC agent endpoint:
 
-https://github.com/StanPaunov/SentinelMobile
+```text
+http://PC-IP-ADDRESS:8787/api/status
+```
+
+The Windows PC app still needs to expose that endpoint before the Android app can show live PC data.
 
 ### Mobile Features
 
 - Dark mode by default
 - Refresh interval selector: 5 seconds, 30 seconds, 1 minute, or Never
-- Swipe or tap between Overview, Network, Security, Storage, and Device tabs
-- GPS coordinates with hold-to-copy support
-- Battery information and estimated time remaining when Android exposes enough data
-- Memory, storage, and aggregate network throughput cards
-- Network status, interface inventory, and button to Android Network Settings
-- Security checks and button to Android Security Settings
-- Storage summary and button to Android Storage Settings
-- Device information and button to Android Device Settings
+- Swipe or tap between PC, Network, Security, Clients, and Pro tabs
+- Set a PC Agent URL for one-PC LAN monitoring
+- PC cards for CPU, memory, system disk, and network throughput when the PC agent reports them
+- PC sections for firewall, Microsoft Defender, alerts, TCP connections, and listening TCP ports
+- Pro placeholder for future multi-client monitoring
+
+## Separate Android Phone Monitor
+
+The Android-phone monitoring app should be a separate app/project so users are not confused:
+
+- PC Sentinel Mobile: checks Windows PCs from Android.
+- Sentinel Phone: checks Android phone battery, GPS, storage, network, and Android security settings.
 
 ## Security Notes
 
 Both apps are local visibility tools. They do not replace antivirus, do not block traffic, and do not upload monitoring data.
 
-The Android app does not request internet access or package-install permission. Location is used only for the GPS coordinate card, and copied GPS coordinates are automatically cleared from the clipboard when unchanged.
+PC Sentinel Mobile requests internet access so it can contact the PC agent over the local network. The separate Android-phone monitor can request phone-specific permissions only when that app is built.
