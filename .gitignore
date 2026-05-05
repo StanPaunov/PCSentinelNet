@@ -1,6 +1,36 @@
+# Windows and editor files
+Thumbs.db
+Desktop.ini
+.DS_Store
+.vs/
+.vscode/
+
+# Build outputs
 bin/
 obj/
+build/
+out/
 *.user
-*.suo
 *.log
-.vs/
+
+# Android / Gradle
+.gradle/
+**/.gradle/
+**/build/
+**/local.properties
+
+# Generated packages and screenshots kept outside source control
+*.apk
+*.aab
+*.zip
+*.png
+*.jpg
+*.jpeg
+
+# Keep website assets that are intentionally published.
+!docs/*.png
+!docs/*.jpg
+!docs/*.jpeg
+!docs/**/*.png
+!docs/**/*.jpg
+!docs/**/*.jpeg
