@@ -6,7 +6,7 @@ The product direction is:
 
 - **PC Sentinel NET**: Windows desktop app that monitors the Windows PC.
 - **PC Sentinel Mobile**: Android companion app for viewing Windows PC information from a phone.
-- **Sentinel Phone**: separate future Android app for monitoring Android phones themselves.
+ 
 
 Website: https://stanpaunov.github.io/PCSentinelNet/
 
@@ -26,7 +26,7 @@ The Windows desktop app monitors local PC health, network activity, listening TC
 
 ### Desktop Features
 
-- Dark mode by default, with a Light Mode button
+- Dark mode by default, with a Light Mode option
 - Refresh interval selector: 5 seconds, 30 seconds, 1 minute, or Never
 - CPU, memory, system disk, and network throughput summary cards
 - Top processes table with internet search by hover, double-click, or right-click
@@ -63,7 +63,7 @@ The Windows PC app still needs to expose that endpoint before the Android app ca
 The Android-phone monitoring app should be a separate app/project so users are not confused:
 
 - PC Sentinel Mobile: checks Windows PCs from Android.
-- Sentinel Phone: checks Android phone battery, GPS, storage, network, and Android security settings.
+- Sentinel Mobile: checks Android phone battery, GPS, storage, network, and Android security settings.
 
 ## Security Notes
 
