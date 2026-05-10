@@ -337,8 +337,7 @@ dd {
 .section-band,
 .details-section,
 .install-section,
-.security-section,
-.desktop-panel {
+.security-section {
   padding: clamp(48px, 7vw, 88px) clamp(18px, 4vw, 56px);
 }
 
@@ -359,107 +358,6 @@ dd {
 .feature-grid article {
   min-height: 190px;
   padding: 20px;
-}
-
-.desktop-panel {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  background: #0d1110;
-}
-
-.dashboard-shell {
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  overflow: hidden;
-  background: var(--panel);
-  box-shadow: 0 24px 70px var(--shadow);
-}
-
-.dashboard-toolbar,
-.dashboard-tabs,
-.dashboard-table div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-}
-
-.dashboard-toolbar {
-  min-height: 58px;
-  padding: 0 18px;
-  border-bottom: 1px solid var(--line);
-  background: #101814;
-  color: var(--muted);
-}
-
-.dashboard-toolbar strong {
-  color: var(--green);
-}
-
-.dashboard-toolbar a {
-  color: var(--green);
-  text-decoration: none;
-}
-
-.dashboard-metrics {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-  padding: 18px;
-}
-
-.dashboard-metrics div,
-.dashboard-table {
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--panel-strong);
-}
-
-.dashboard-metrics div {
-  min-height: 98px;
-  padding: 16px;
-}
-
-.dashboard-metrics span,
-.dashboard-table span {
-  color: var(--muted);
-}
-
-.dashboard-metrics strong {
-  display: block;
-  margin-top: 10px;
-  color: var(--green);
-  font-size: 28px;
-}
-
-.dashboard-tabs {
-  justify-content: flex-start;
-  padding: 0 18px 18px;
-}
-
-.dashboard-tabs span {
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 10px 12px;
-  color: var(--muted);
-}
-
-.dashboard-tabs span:first-child {
-  color: var(--green);
-  background: rgba(110, 231, 166, 0.08);
-}
-
-.dashboard-table {
-  margin: 0 18px 18px;
-  padding: 4px 16px;
-}
-
-.dashboard-table div {
-  min-height: 52px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.dashboard-table div:first-child {
-  border-top: 0;
 }
 
 .feature-grid p,
@@ -590,17 +488,9 @@ footer a:hover {
   .release-facts,
   .preview-grid,
   .feature-grid,
-  .dashboard-metrics,
   .monitor-list,
   .security-list {
     grid-template-columns: 1fr;
-  }
-
-  .dashboard-toolbar,
-  .dashboard-tabs,
-  .dashboard-table div {
-    align-items: flex-start;
-    flex-direction: column;
   }
 
   .button {
