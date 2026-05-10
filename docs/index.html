@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="PC Sentinel NET monitors Windows PC health, network, firewall, storage, and security posture, with an Android companion for checking Windows PC information from a phone.">
+  <meta name="description" content="PC Sentinel NET monitors Windows PC health, network, firewall, storage, and security posture locally on Windows.">
   <title>PC Sentinel NET</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -15,7 +15,6 @@
     </a>
     <nav aria-label="Main navigation">
       <a href="#download">Download</a>
-      <a href="#mobile">Mobile</a>
       <a href="#capabilities">Capabilities</a>
       <a href="#security">Security</a>
       <a href="https://github.com/StanPaunov/PCSentinelNet">GitHub</a>
@@ -33,7 +32,6 @@
         </p>
         <div class="hero-actions" id="download">
           <a class="button primary" href="https://github.com/StanPaunov/PCSentinelNet/releases">Download desktop release</a>
-          <a class="button secondary" href="#mobile">Android companion</a>
           <a class="button secondary" href="https://github.com/StanPaunov/PCSentinelNet">View source</a>
         </div>
         <dl class="release-facts" aria-label="Release facts">
@@ -88,35 +86,6 @@
       </div>
     </section>
 
-    <section class="mobile-section" id="mobile" aria-labelledby="mobile-title">
-      <div class="section-heading">
-        <p class="eyebrow">Android companion</p>
-        <h2 id="mobile-title">PC Sentinel Mobile is included in this repository</h2>
-      </div>
-      <div class="mobile-grid">
-        <article>
-          <h3>PC monitor</h3>
-          <p>Connect to a LAN PC agent URL and show Windows CPU, memory, disk, network, firewall, Defender, alerts, TCP connections, and listening ports.</p>
-        </article>
-        <article>
-          <h3>Free and Pro path</h3>
-          <p>Free mode is shaped for one monitored PC. The Pro tab reserves a path for future multi-client monitoring.</p>
-        </article>
-        <article>
-          <h3>Separate phone monitor</h3>
-          <p>A different Android app should monitor Android phones themselves, including battery, GPS, storage, network, and Android security checks.</p>
-        </article>
-        <article>
-          <h3>Storage and device</h3>
-          <p>PC Sentinel Mobile stays focused on Windows PC data so users understand which device they are checking.</p>
-        </article>
-      </div>
-      <div class="cross-links" aria-label="Project links">
-        <a class="button primary" href="https://github.com/StanPaunov/PCSentinelNet">Mobile source in this repo</a>
-        <a class="button secondary" href="https://github.com/StanPaunov/PCSentinelNet/releases">APK releases</a>
-      </div>
-    </section>
-
     <section class="section-band" id="capabilities" aria-labelledby="capabilities-title">
       <div class="section-heading">
         <p class="eyebrow">Core views</p>
@@ -126,10 +95,6 @@
         <article>
           <h3>PC and system health</h3>
           <p>Review basic hardware, software, CPU, memory, disk, and operating system information.</p>
-        </article>
-        <article>
-          <h3>Android companion</h3>
-          <p>Use PC Sentinel Mobile for one-PC LAN monitoring from Android. Use a separate phone-monitor app for Android-device checks.</p>
         </article>
         <article>
           <h3>Network and firewall</h3>
@@ -197,7 +162,6 @@
         <li>Download the latest zip from GitHub Releases.</li>
         <li>Extract the zip to a normal folder such as Downloads or Documents.</li>
         <li>Run <code>PCSentinelNet.exe</code>.</li>
-        <li>For Android, open the <code>Sentinel Mobile</code> project in this repository or download APK releases when published.</li>
       </ol>
     </section>
 
@@ -209,7 +173,7 @@
       <div class="security-list">
         <p>PC Sentinel NET reads Windows system information locally. It is not a packet sniffer and does not upload monitoring data.</p>
         <p>Listening TCP ports are summarized so you can judge exposure: localhost-only ports are usually lower risk, while public listening ports deserve closer review.</p>
-        <p>PC Sentinel Mobile is included as the Android companion for Windows PC monitoring. Android-phone monitoring should live in a separate app. Unsigned Windows apps can show SmartScreen warnings until code signed.</p>
+        <p>The Windows app has no Android monitoring feature, mobile API listener, or phone companion service. Unsigned Windows apps can show SmartScreen warnings until code signed.</p>
       </div>
     </section>
   </main>
