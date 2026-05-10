@@ -338,8 +338,7 @@ dd {
 .details-section,
 .install-section,
 .security-section,
-.desktop-panel,
-.mobile-section {
+.desktop-panel {
   padding: clamp(48px, 7vw, 88px) clamp(18px, 4vw, 56px);
 }
 
@@ -351,15 +350,13 @@ dd {
   margin-bottom: 28px;
 }
 
-.feature-grid,
-.mobile-grid {
+.feature-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
 }
 
-.feature-grid article,
-.mobile-grid article {
+.feature-grid article {
   min-height: 190px;
   padding: 20px;
 }
@@ -465,28 +462,6 @@ dd {
   border-top: 0;
 }
 
-.mobile-section {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.mobile-grid article {
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--panel);
-}
-
-.mobile-grid p {
-  margin: 0;
-  color: var(--muted);
-}
-
-.cross-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 20px;
-}
-
 .feature-grid p,
 .security-list p {
   margin: 0;
@@ -587,7 +562,6 @@ footer a:hover {
   }
 
   .feature-grid,
-  .mobile-grid,
   .monitor-list,
   .security-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -616,7 +590,6 @@ footer a:hover {
   .release-facts,
   .preview-grid,
   .feature-grid,
-  .mobile-grid,
   .dashboard-metrics,
   .monitor-list,
   .security-list {
