@@ -36,6 +36,7 @@ public sealed class MainForm : Form
     private readonly Label listeningRiskSummary = new();
     private readonly DataGridView securityGrid = NewGrid();
     private readonly DataGridView firewallGrid = NewGrid();
+    private readonly DataGridView eventGrid = NewGrid();
     private readonly DataGridView driveGrid = NewGrid();
     private readonly DataGridView physicalDiskGrid = NewGrid();
     private readonly TextBox securityNotes = NewTextBox();
@@ -187,6 +188,16 @@ public sealed class MainForm : Form
             securityNotes
         });
 
+        var events = new TabPage("Event Viewer");
+        eventGrid.SetBounds(18, 62, 1090, 462);
+        eventGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+        events.Controls.AddRange(new Control[] {
+            NewLabel("Recent Windows Events", 18, 0, 220, 20, 9F, FontStyle.Bold),
+            NewLabel("System and Application errors/warnings from the last 7 days", 18, 20, 500, 20),
+            NewLabel("Short guide: Critical/Error events need review first; repeated Warnings can point to drivers, services, or app problems.", 18, 40, 900, 20),
+            eventGrid
+        });
+
         var disk = new TabPage("Disk & Info");
         driveGrid.SetBounds(18, 18, 1090, 170);
         physicalDiskGrid.SetBounds(18, 220, 1090, 120);
@@ -208,7 +219,7 @@ public sealed class MainForm : Form
             systemInfo
         });
 
-        tabs.TabPages.AddRange(new[] { overview, network, security, disk });
+        tabs.TabPages.AddRange(new[] { overview, network, security, events, disk });
         Controls.Add(tabs);
         tabs.BringToFront();
     }
@@ -277,6 +288,7 @@ public sealed class MainForm : Form
             Bind(connectionGrid, data.Connections);
             Bind(securityGrid, data.Security);
             Bind(firewallGrid, data.Firewall);
+            Bind(eventGrid, data.Events);
             Bind(driveGrid, data.Drives);
             Bind(physicalDiskGrid, data.PhysicalDisks);
             systemInfo.Text = data.SystemInfo;
@@ -320,11 +332,12 @@ public sealed class MainForm : Form
         var connectionTask = SafeTask(() => BuildTcpTable(listeningOnly: false), ErrorTable("TCP connections", "Native TCP probe failed."), "TCP connections");
         var securityTask = SafeTableTask(SecurityScript, "Security checks");
         var firewallTask = SafeTableTask(FirewallScript, "Firewall profiles");
+        var eventTask = SafeTableTask(EventViewerScript, "Event Viewer");
         var driveTask = SafeTableTask(DriveScript, "Drives");
         var physicalDiskTask = SafeTableTask(PhysicalDiskScript, "Physical disks");
         var systemInfoTask = SafeTask(() => PsText(SystemInfoScript), "System information probe timed out or failed.", "System info");
 
-        await Task.WhenAll(snapshotTask, processTask, networkTask, listeningTask, connectionTask, securityTask, firewallTask, driveTask, physicalDiskTask, systemInfoTask);
+        await Task.WhenAll(snapshotTask, processTask, networkTask, listeningTask, connectionTask, securityTask, firewallTask, eventTask, driveTask, physicalDiskTask, systemInfoTask);
 
         return new DashboardData
         {
@@ -335,6 +348,7 @@ public sealed class MainForm : Form
             Connections = connectionTask.Result,
             Security = securityTask.Result,
             Firewall = firewallTask.Result,
+            Events = eventTask.Result,
             Drives = driveTask.Result,
             PhysicalDisks = physicalDiskTask.Result,
             SystemInfo = systemInfoTask.Result
@@ -634,7 +648,7 @@ public sealed class MainForm : Form
         }
 
         ApplyThemeRecursive(this);
-        foreach (var grid in new[] { processGrid, adapterGrid, listeningPortGrid, connectionGrid, securityGrid, firewallGrid, driveGrid, physicalDiskGrid })
+        foreach (var grid in new[] { processGrid, adapterGrid, listeningPortGrid, connectionGrid, securityGrid, firewallGrid, eventGrid, driveGrid, physicalDiskGrid })
             ApplyGridTheme(grid);
         tabs.Invalidate();
     }
@@ -987,6 +1001,7 @@ public sealed class MainForm : Form
         public DataTable Connections { get; init; } = new();
         public DataTable Security { get; init; } = new();
         public DataTable Firewall { get; init; } = new();
+        public DataTable Events { get; init; } = new();
         public DataTable Drives { get; init; } = new();
         public DataTable PhysicalDisks { get; init; } = new();
         public string SystemInfo { get; init; } = "";
@@ -1039,6 +1054,7 @@ if ($alerts.Count -eq 0) { $alerts.Add('No active alerts from the latest scan.')
     private const string ConnectionScript = @"$map=@{}; Get-Process | ForEach-Object { $map[[int]$_.Id]=$_.ProcessName }; netstat -ano | Select-Object -Skip 4 | ForEach-Object { $l=($_ -replace '\s+',' ').Trim(); $p=$l.Split(' '); if($p.Count -ge 5 -and $p[0] -eq 'TCP'){ $li=$p[1].LastIndexOf(':'); $ri=$p[2].LastIndexOf(':'); $pid=[int]$p[-1]; [pscustomobject]@{Process=if($map[$pid]){$map[$pid]}else{'PID '+$pid};LocalAddress=$p[1].Substring(0,$li).Trim('[',']');LocalPort=$p[1].Substring($li+1);RemoteAddress=$p[2].Substring(0,$ri).Trim('[',']');RemotePort=$p[2].Substring($ri+1);State=$p[3];OwningProcess=$pid} } } | Select-Object -First 120 | ConvertTo-Json -Depth 3";
     private const string SecurityScript = @"$items=@(); try { Get-NetFirewallProfile -ErrorAction Stop | ForEach-Object { $items += [pscustomobject]@{Area='Firewall';Item=$_.Name;Status=if($_.Enabled){'On'}else{'Off'};Severity=if($_.Enabled){'OK'}else{'High'}} } } catch { $items += [pscustomobject]@{Area='Firewall';Item='Profiles';Status='Unavailable';Severity='Info'} }; try { $d=Get-MpComputerStatus -ErrorAction Stop; $items += [pscustomobject]@{Area='Defender';Item='Real-time protection';Status=if($d.RealTimeProtectionEnabled){'On'}else{'Off'};Severity=if($d.RealTimeProtectionEnabled){'OK'}else{'High'}}; $items += [pscustomobject]@{Area='Defender';Item='Antivirus signatures';Status=[string]$d.AntivirusSignatureLastUpdated;Severity='Info'} } catch { $items += [pscustomobject]@{Area='Defender';Item='Status';Status='Unavailable';Severity='Info'} }; $items | ConvertTo-Json -Depth 3";
     private const string FirewallScript = @"& { try { Get-NetFirewallProfile -ErrorAction Stop | Sort-Object Name | Select-Object @{n='Profile';e={$_.Name}},@{n='Enabled';e={if($_.Enabled){'On'}else{'Off'}}},DefaultInboundAction,DefaultOutboundAction,@{n='Notifications';e={if($_.NotifyOnListen){'On'}else{'Off'}}},@{n='LogBlocked';e={if($_.LogBlocked){'On'}else{'Off'}}},@{n='LogAllowed';e={if($_.LogAllowed){'On'}else{'Off'}}} } catch { [pscustomobject]@{Profile='Unavailable';Enabled='Unknown';DefaultInboundAction='Unknown';DefaultOutboundAction='Unknown';Notifications='Unknown';LogBlocked='Unknown';LogAllowed='Unknown'} } } | ConvertTo-Json -Depth 3";
+    private const string EventViewerScript = @"& { try { Get-WinEvent -FilterHashtable @{LogName=@('System','Application'); Level=1,2,3; StartTime=(Get-Date).AddDays(-7)} -MaxEvents 80 -ErrorAction Stop | Select-Object @{n='Time';e={$_.TimeCreated.ToString('yyyy-MM-dd HH:mm:ss')}},@{n='Log';e={$_.LogName}},@{n='Level';e={$_.LevelDisplayName}},@{n='Provider';e={$_.ProviderName}},@{n='EventId';e={$_.Id}},@{n='Message';e={$m=($_.Message -replace '\s+',' ').Trim(); if($m.Length -gt 220){$m.Substring(0,220)+'...'}else{$m}}} } catch { [pscustomobject]@{Time=(Get-Date -Format 'yyyy-MM-dd HH:mm:ss');Log='Event Viewer';Level='Info';Provider='PC Sentinel NET';EventId='';Message='Event Viewer data unavailable. Run as Administrator for more complete event access.'} } } | ConvertTo-Json -Depth 3";
     private const string DriveScript = HelperScript + @"[System.IO.DriveInfo]::GetDrives() | Where-Object IsReady | ForEach-Object { $used=$_.TotalSize-$_.AvailableFreeSpace; [pscustomobject]@{Drive=$_.Name;Label=$_.VolumeLabel;FileSystem=$_.DriveFormat;Type=$_.DriveType;Used=if($_.TotalSize -gt 0){('{0}%' -f [math]::Round(($used/$_.TotalSize)*100,0))}else{'N/A'};Free=Format-Bytes $_.AvailableFreeSpace;Total=Format-Bytes $_.TotalSize} } | ConvertTo-Json -Depth 3";
     private const string PhysicalDiskScript = HelperScript + @"& { try { Get-PhysicalDisk -ErrorAction Stop | Select-Object FriendlyName,MediaType,BusType,HealthStatus,OperationalStatus,@{n='Size';e={Format-Bytes $_.Size}} } catch { try { Get-CimInstance Win32_DiskDrive -ErrorAction Stop | Select-Object @{n='FriendlyName';e={$_.Model}},MediaType,@{n='BusType';e={$_.InterfaceType}},@{n='HealthStatus';e={$_.Status}},@{n='OperationalStatus';e={$_.Status}},@{n='Size';e={Format-Bytes $_.Size}} } catch { [pscustomobject]@{FriendlyName='Unavailable';MediaType='Unknown';BusType='Unknown';HealthStatus='Unknown';OperationalStatus='Unknown';Size='Unknown'} } } } | ConvertTo-Json -Depth 3";
     private const string SystemInfoScript = @"$lines=New-Object System.Collections.Generic.List[string]; $lines.Add('System inventory'); $lines.Add('Generated: '+(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')); $lines.Add(''); try{$c=Get-CimInstance Win32_ComputerSystem; $lines.Add('Computer: '+$c.Name); $lines.Add('Manufacturer: '+$c.Manufacturer); $lines.Add('Model: '+$c.Model)}catch{$lines.Add('Computer: '+$env:COMPUTERNAME)}; try{$os=Get-CimInstance Win32_OperatingSystem; $lines.Add('OS: '+$os.Caption); $lines.Add('Version: '+$os.Version+' build '+$os.BuildNumber)}catch{$lines.Add('OS: '+[Environment]::OSVersion.VersionString)}; try{$cpu=Get-CimInstance Win32_Processor|Select-Object -First 1; $lines.Add('CPU: '+$cpu.Name)}catch{}; $lines.Add(''); $lines.Add('Installed software sample:'); Get-ItemProperty 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*','HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*' -ErrorAction SilentlyContinue | Where-Object DisplayName | Sort-Object DisplayName | Select-Object -First 12 | ForEach-Object { $lines.Add('  '+$_.DisplayName+' '+$_.DisplayVersion+' - '+$_.Publisher) }; $lines -join [Environment]::NewLine";
