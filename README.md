@@ -25,6 +25,7 @@ The Windows desktop app monitors only the current Windows PC. It does not includ
 - Network & Firewall tab with active interfaces, listening TCP ports, and TCP connections
 - Listening TCP ports show owning process, PID, risk level, reason, and a danger summary
 - Security tab with Defender/firewall checks and an Open Security Settings button
+- Event Viewer tab with recent System/Application errors and warnings
 - Disk & Info tab with volume, physical disk, hardware, OS, and installed software information
 - Buttons for Disk Management and Windows Storage Settings
 
